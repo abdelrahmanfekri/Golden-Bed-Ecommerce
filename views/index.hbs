@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Golden Bed</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+    .bgk-container {
+        position: relative;
+        text-align: center;
+        background-color: rgba(245, 210, 210, 0.349);
+        width: 100%;
+    }
+
+    .bgk-centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .btn:hover {
+        background-color: pink !important;
+        color: black !important;
+    }
+</style>
+
+<body>
+    <!--navigation-->
+    <nav class="navbar navbar-expand navbar-light bg-light sticky-top">
+        <div class="container px-sm-0 px-lg-5">
+            <a class="navbar-brand" href="/">
+                <img class="rounded-pill" src="images/logo.jpg" alt="Golden Bed Logo" height="45">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-0 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link text-primary" aria-current="page" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                </ul>
+                <form>
+                    <a class="btn btn-outline-dark p-0 p-lg-1" style="display: block;" href="/checkout" action="get">
+                        <i class="bth bi-cart-fill"></i>
+                        Cart<span class="badge bg-sm-info" id="cardSize" style="color:black;">{{cardSize}}</span>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- Header-->
+    <header class="container-fluid p-0">
+        <div class="bgk-container">
+            <img src="images/background.jpg" alt="background image" style="width:80%">
+            <div class="bgk-centered">
+                <div class="display-5 fw-bolder text-black">Golden Bed</div>
+                <div class="display-8 text-secondary fw-bolder">Online Store providing different type of product
+                </div>
+            </div>
+    </header>
+    <!--selections-->
+    <section class="d-flex justify-content-center pt-sm-2 pt-md-3 pt-lg-4">
+        <div class="btn-group" id="selectOptions" role="group" aria-label="Basic radio toggle button group">
+            {{#each selector}}
+            <a class="btn btn-outline-primary m-2 rounded-pill" id="{{id}}" href="/{{id}}" action="get">{{name}}</a>
+            {{/each}}
+        </div>
+    </section>
+    <!-- Section-->
+    <section id="products" class="py-0 py-md-0 py-lg-0">
+        <div class="container px-3 px-lg-5 mt-5">
+            <div class="row gx-1 gx-lg-3 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {{#each products}}
+                <div class="col mb-2 mb-lg-4">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src={{imageUrl}} alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{title}}</h5>
+                                <h5 class="text-secondary">{{desSmall}}</h5>
+                                <!-- Product price-->
+                                price: {{price}} EGP
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                    data-bs-target="#details{{id}}" data-bs-toggle="modal">More details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal" id="details{{id}}" +{{id}}>
+                    <div class="modal-dialog d-flex justify-content-center">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <img src={{imageUrl}} alt="..." height="30%" />
+                            <hr>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <h4 class="modal-title text-center m-3">{{title}}</h4>
+                                    <h6 class="text-secondary text-center m-3">{{desSmall}}</h6>
+                                    <h6 class="text-secondary m-3">{{desLarg}}</h6>
+                                </div>
+                                <form action="/{{id}}" method="post" id="addToCard">
+                                    {{#each productSize}}
+                                    <div class="container d-flex justify-content-left m-sm-2 m-lg-3">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" id="optionsRadios{{id}}" +
+                                                value="{{size}}" + checked="">
+                                            {{size}}
+                                        </label>
+                                    </div>
+                                    {{/each}}
+                                    <div class="modal-footer m-2 d-flex justify-content-center">
+                                        <button type="submit" onclick="changeCard()"
+                                            class="btn btn-outline-dark" data-bs-dismiss="modal">Add to Card</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Author &copy; Abderlahman fekri</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<script>
+    let c = Number("{{cardSize}}");
+    changeSelectColor();
+    function changeSelectColor(){
+        let id = "{{select}}";
+        if(!id) return;
+        //console.log(id);
+        document.getElementById(id).style.backgroundColor="pink";
+    }
+    function changeCard() {
+        c = c+1;
+        document.getElementById("cardSize").innerHTML = c;
+    }
+
+</script>
+</html>

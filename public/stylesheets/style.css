@@ -1,0 +1,20 @@
+body {
+  padding: 0px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.bgk-container {
+  position: relative;
+  text-align: center;
+  background-color:  rgba(245, 210, 210, 0.349);
+  width: 100%;
+}
+.bgk-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
