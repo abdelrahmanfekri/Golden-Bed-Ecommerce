@@ -1,6 +1,4 @@
-const e = require('express');
 var express = require('express');
-const { TypedEventEmitter } = require('mongodb');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb+srv://golden-bed:Aa26951546@cluster0.iverxbm.mongodb.net/?retryWrites=true&w=majority";
@@ -8,7 +6,7 @@ var database = "mydb";
 var dbo;
 MongoClient.connect(url,function(err,db){
   if(err) throw err;
-  dbo =db;
+  dbo = db;
   console.log('MongoClient is connected');
 })
 

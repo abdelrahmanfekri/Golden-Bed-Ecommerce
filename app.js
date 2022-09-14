@@ -3,7 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mongoose = require('mongoose');
 var session =require('express-session');
 var MongoDBStore = require('connect-mongodb-session')(session);
 var url = "mongodb+srv://golden-bed:Aa26951546@cluster0.iverxbm.mongodb.net/?retryWrites=true&w=majority";;

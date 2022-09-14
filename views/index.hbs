@@ -30,10 +30,13 @@
         background-color: pink !important;
         color: black !important;
     }
+
+    .active {
+        color: blue !important;
+    }
 </style>
 
 <body>
-    <!--navigation-->
     <nav class="navbar navbar-expand navbar-light bg-light sticky-top">
         <div class="container px-sm-0 px-lg-5">
             <a class="navbar-brand" href="/">
@@ -44,7 +47,7 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-0 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link text-primary" aria-current="page" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                 </ul>
@@ -57,7 +60,6 @@
             </div>
         </div>
     </nav>
-    <!-- Header-->
     <header class="container-fluid p-0">
         <div class="bgk-container">
             <img src="images/background.jpg" alt="background image" style="width:80%">
@@ -66,6 +68,7 @@
                 <div class="display-8 text-secondary fw-bolder">Online Store providing different type of product
                 </div>
             </div>
+        </div>
     </header>
     <!--selections-->
     <section class="d-flex justify-content-center pt-sm-2 pt-md-3 pt-lg-4">
@@ -83,7 +86,7 @@
                 <div class="col mb-2 mb-lg-4">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <img class="card-img-top" src={{imageUrl}} alt="..." />
+                        <img class="card-img-top" src={{image}} alt="..." />
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
@@ -108,7 +111,7 @@
                             <div class="modal-header">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                            <img src={{imageUrl}} alt="..." height="30%" />
+                            <img src={{image}} alt="..." height="30%" />
                             <hr>
                             <div class="modal-body">
                                 <div class="container">
@@ -127,8 +130,8 @@
                                     </div>
                                     {{/each}}
                                     <div class="modal-footer m-2 d-flex justify-content-center">
-                                        <button type="submit" onclick="changeCard()"
-                                            class="btn btn-outline-dark" data-bs-dismiss="modal">Add to Card</button>
+                                        <button type="submit" onclick="changeCard()" class="btn btn-outline-dark"
+                                            data-bs-dismiss="modal">Add to Card</button>
                                     </div>
                                 </form>
                             </div>
@@ -151,16 +154,17 @@
 <script>
     let c = Number("{{cardSize}}");
     changeSelectColor();
-    function changeSelectColor(){
+    function changeSelectColor() {
         let id = "{{select}}";
-        if(!id) return;
+        if (!id) return;
         //console.log(id);
-        document.getElementById(id).style.backgroundColor="pink";
+        document.getElementById(id).style.backgroundColor = "pink";
     }
     function changeCard() {
-        c = c+1;
+        c = c + 1;
         document.getElementById("cardSize").innerHTML = c;
     }
 
 </script>
+
 </html>
