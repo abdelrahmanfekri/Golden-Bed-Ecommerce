@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var MongoClient = require('mongodb').MongoClient;
+var {MongoClient,ObjectId} = require('mongodb');
+ 
 var url = "mongodb+srv://golden-bed:Aa26951546@cluster0.iverxbm.mongodb.net/?retryWrites=true&w=majority";
 var database = "mydb";
 var dbo;
@@ -92,14 +93,14 @@ router.get('/about', auth,function (req, res, next) {
 
 router.get('/:id',auth,async function (req, res, next) {
   let selector = await dbo.db(database).collection("select").find({}).toArray();
-  let products = await dbo.db(database).collection("products").find({type:req.params.id}).toArray();
   let card = req.session.card;
-  res.render('index', { title: 'HomePage', products: products, selector: selector, cardSize: card.length, select: req.params.id });
+  let category = await dbo.db(database).collection("select").findOne({_id:ObjectId(req.params.id)});
+  let products = await dbo.db(database).collection("products").find({category:category.name}).toArray();
+  res.render('index', { title: 'HomePage', products: products, selector: selector, cardSize: card.length, select: category._id});
 });
 
 router.post('/:id',auth,async function (req, res, next) {
-  let product = await dbo.db(database).collection("products").findOne({"id":req.params.id});
-  product.productSize = req.body.optionsRadios;
+  let product = await dbo.db(database).collection("products").findOne({"id":Number(req.params.id)});
   product.cardId =req.session.numberOfOrders; 
   //console.log(product);
   let card = req.session.card;

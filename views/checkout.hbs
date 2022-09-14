@@ -51,7 +51,7 @@
                     {{#each products}}
                     <li class="list-group-item d-flex justify-content-between" id="{{cardId}}List">
                         <div class="d-flex">
-                            <img src="{{imageUrl}}" width="30%">
+                            <img src="{{image}}" width="30%">
                             <div>
                                 <h5 class="m-1">{{title}}</h5>
                                 <h8 class="m-2 text-secondary">{{desSmall}}</h8>
@@ -116,11 +116,9 @@
                 console.log(price);
                 function totalPrice() {
                     let price = 0;
-                    { { #each products } }
+                    {{#each products}}
                     price += Number("{{price}}");
-                    {
-                        {
-                            /each}}
+                    {{/each}}
                             document.getElementById("totalPrice").innerHTML = price + " EGP";
                             return price;
                         }

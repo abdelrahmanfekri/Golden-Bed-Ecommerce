@@ -34,6 +34,9 @@
     .active {
         color: blue !important;
     }
+    .imgheader{
+        width: ;
+    }
 </style>
 
 <body>
@@ -62,7 +65,7 @@
     </nav>
     <header class="container-fluid p-0">
         <div class="bgk-container">
-            <img src="images/background.jpg" alt="background image" style="width:80%">
+            <img class="image-fluid w-100" src="images/background.jpg" alt="background image">
             <div class="bgk-centered">
                 <div class="display-5 fw-bolder text-black">Golden Bed</div>
                 <div class="display-8 text-secondary fw-bolder">Online Store providing different type of product
@@ -72,16 +75,16 @@
     </header>
     <!--selections-->
     <section class="d-flex justify-content-center pt-sm-2 pt-md-3 pt-lg-4">
-        <div class="btn-group" id="selectOptions" role="group" aria-label="Basic radio toggle button group">
+        <div class="btn-group d-flex flex-wrap" id="selectOptions" role="group" aria-label="Basic radio toggle button group">
             {{#each selector}}
-            <a class="btn btn-outline-primary m-2 rounded-pill" id="{{id}}" href="/{{id}}" action="get">{{name}}</a>
+             <a class="btn fs-6 btn-outline-primary p-1 p-md-2 m-2 rounded-pill" id="{{_id}}" href="/{{_id}}" action="get">{{name}}</a>
             {{/each}}
         </div>
     </section>
     <!-- Section-->
     <section id="products" class="py-0 py-md-0 py-lg-0">
         <div class="container px-3 px-lg-5 mt-5">
-            <div class="row gx-1 gx-lg-3 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div class="row gx-0 gx-lg-3 row-cols-1 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {{#each products}}
                 <div class="col mb-2 mb-lg-4">
                     <div class="card h-100">
@@ -92,7 +95,6 @@
                             <div class="text-center">
                                 <!-- Product name-->
                                 <h5 class="fw-bolder">{{title}}</h5>
-                                <h5 class="text-secondary">{{desSmall}}</h5>
                                 <!-- Product price-->
                                 price: {{price}} EGP
                             </div>
@@ -106,29 +108,19 @@
                     </div>
                 </div>
                 <div class="modal" id="details{{id}}" +{{id}}>
-                    <div class="modal-dialog d-flex justify-content-center">
-                        <div class="modal-content">
+                    <div class="modal-dialog">
+                        <div class="modal-content d-flex justify-content-center">
                             <div class="modal-header">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                            <img src={{image}} alt="..." height="30%" />
+                            <img class="image-fluid w-50 m-auto" src={{image}} alt="..." />
                             <hr>
                             <div class="modal-body">
                                 <div class="container">
                                     <h4 class="modal-title text-center m-3">{{title}}</h4>
-                                    <h6 class="text-secondary text-center m-3">{{desSmall}}</h6>
-                                    <h6 class="text-secondary m-3">{{desLarg}}</h6>
+                                    <h6 class="text-secondary text-start m-3">{{description}}</h6>
                                 </div>
                                 <form action="/{{id}}" method="post" id="addToCard">
-                                    {{#each productSize}}
-                                    <div class="container d-flex justify-content-left m-sm-2 m-lg-3">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios{{id}}" +
-                                                value="{{size}}" + checked="">
-                                            {{size}}
-                                        </label>
-                                    </div>
-                                    {{/each}}
                                     <div class="modal-footer m-2 d-flex justify-content-center">
                                         <button type="submit" onclick="changeCard()" class="btn btn-outline-dark"
                                             data-bs-dismiss="modal">Add to Card</button>
@@ -164,7 +156,6 @@
         c = c + 1;
         document.getElementById("cardSize").innerHTML = c;
     }
-
 </script>
 
 </html>
