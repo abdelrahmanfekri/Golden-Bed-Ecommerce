@@ -34,6 +34,7 @@ router.get('/', async function (req, res, next) {
   let card = req.session.card;
   let selector = await dbo.db(database).collection("select").find({}).toArray();
   let products = await dbo.db(database).collection("products").find({}).limit(20).toArray();
+  //console.log(products);
   res.render('index', { title: 'HomePage', products: products, selector: selector, cardSize: card.length});
 });
 
@@ -66,17 +67,17 @@ router.post('/checkout',auth,function(req,res,next){
   add("newOrders",obj);
   add("oldOrders",obj);
   card = []
-  console.log(price);
+  //console.log(price);
   req.session.card = card;
   res.render('recieveCheckout',{cardSize: card.length});
 });
 
 router.get('/checkout/:id',auth,function(req,res,next){
   card = req.session.card;
-  console.log(card);
+  //console.log(card);
   card = card.filter(item=>item.cardId!=req.params.id);
   req.session.card = card;
-  console.log(card);
+  //console.log(card);
   res.status(204).send();
 });
 
@@ -92,15 +93,13 @@ router.get('/about', auth,function (req, res, next) {
 });
 
 router.get('/:id',auth,async function (req, res, next) {
-  let selector = await dbo.db(database).collection("select").find({}).toArray();
-  let card = req.session.card;
   let category = await dbo.db(database).collection("select").findOne({_id:ObjectId(req.params.id)});
   let products = await dbo.db(database).collection("products").find({category:category.name}).toArray();
-  res.render('index', { title: 'HomePage', products: products, selector: selector, cardSize: card.length, select: category._id});
+  res.json(products);
 });
 
 router.post('/:id',auth,async function (req, res, next) {
-  let product = await dbo.db(database).collection("products").findOne({"id":Number(req.params.id)});
+  let product = await dbo.db(database).collection("products").findOne({_id:ObjectId(req.params.id)});
   product.cardId =req.session.numberOfOrders; 
   //console.log(product);
   let card = req.session.card;

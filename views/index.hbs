@@ -10,6 +10,61 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        async function filterProducts(id) {
+            let html = "";
+            products = await fetch('/' + id).then((res) => res.json()).catch((err) => console.log(err));
+            for (i in products) {
+                let product = products[i];
+                let template = `<div class="col mb-2 mb-lg-4">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src=${product.image} alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">${product.title}</h5>
+                                <!-- Product price-->
+                                price: ${product.price} EGP
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                    data-bs-target="#details${product._id}" data-bs-toggle="modal">More details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal" id="details${product._id}" +${product._id}>
+                    <div class="modal-dialog">
+                        <div class="modal-content d-flex justify-content-center">
+                            <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <img class="image-fluid w-50 m-auto" src=${product.image} alt="..." />
+                            <hr>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <h4 class="modal-title text-center m-3">${product.title}</h4>
+                                    <h6 class="text-secondary text-start m-3">${product.description}</h6>
+                                </div>
+                                <form action="/${product._id}" method="post" id="addToCard">
+                                    <div class="modal-footer m-2 d-flex justify-content-center">
+                                        <button type="submit" onclick="changeCard()" class="btn btn-outline-dark"
+                                            data-bs-dismiss="modal">Add to Card</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                html += template;
+            }
+            document.getElementById('products').innerHTML = html;
+        }
+    </script>
 </head>
 <style>
     .bgk-container {
@@ -34,10 +89,11 @@
     .active {
         color: blue !important;
     }
-    .imgheader{
-        width: ;
-    }
+
+
+
 </style>
+
 
 <body>
     <nav class="navbar navbar-expand navbar-light bg-light sticky-top">
@@ -75,16 +131,19 @@
     </header>
     <!--selections-->
     <section class="d-flex justify-content-center pt-sm-2 pt-md-3 pt-lg-4">
-        <div class="btn-group d-flex flex-wrap" id="selectOptions" role="group" aria-label="Basic radio toggle button group">
+        <div class="btn-group" id="selectOptions" role="group" aria-label="Basic radio toggle button group">
             {{#each selector}}
-             <a class="btn fs-6 btn-outline-primary p-1 p-md-2 m-2 rounded-pill" id="{{_id}}" href="/{{_id}}" action="get">{{name}}</a>
+            <input onclick="filterProducts('{{_id}}')" type="radio" class="btn-check" name="btnradio" id="{{_id}}"
+                autocomplete="off">
+            <label class="btn btn-outline-primary p-1 p-md-2 m-1 m-md-2 rounded-pill shadow-none" for="{{_id}}">{{name}}</label>
             {{/each}}
         </div>
     </section>
     <!-- Section-->
-    <section id="products" class="py-0 py-md-0 py-lg-0">
+
+    <section class="py-0 py-md-0 py-lg-0">
         <div class="container px-3 px-lg-5 mt-5">
-            <div class="row gx-0 gx-lg-3 row-cols-1 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div id="products" class="row gx-0 gx-lg-3 row-cols-1 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {{#each products}}
                 <div class="col mb-2 mb-lg-4">
                     <div class="card h-100">
@@ -102,12 +161,12 @@
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                    data-bs-target="#details{{id}}" data-bs-toggle="modal">More details</a>
+                                    data-bs-target="#details{{_id}}" data-bs-toggle="modal">More details</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal" id="details{{id}}" +{{id}}>
+                <div class="modal" id="details{{_id}}" +{{_id}}>
                     <div class="modal-dialog">
                         <div class="modal-content d-flex justify-content-center">
                             <div class="modal-header">
@@ -120,7 +179,7 @@
                                     <h4 class="modal-title text-center m-3">{{title}}</h4>
                                     <h6 class="text-secondary text-start m-3">{{description}}</h6>
                                 </div>
-                                <form action="/{{id}}" method="post" id="addToCard">
+                                <form action="/{{_id}}" method="post" id="addToCard">
                                     <div class="modal-footer m-2 d-flex justify-content-center">
                                         <button type="submit" onclick="changeCard()" class="btn btn-outline-dark"
                                             data-bs-dismiss="modal">Add to Card</button>
@@ -142,20 +201,12 @@
     </footer>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-<script>
-    let c = Number("{{cardSize}}");
-    changeSelectColor();
-    function changeSelectColor() {
-        let id = "{{select}}";
-        if (!id) return;
-        //console.log(id);
-        document.getElementById(id).style.backgroundColor = "pink";
-    }
-    function changeCard() {
-        c = c + 1;
-        document.getElementById("cardSize").innerHTML = c;
-    }
-</script>
+    <script>
+        let c = Number("{{ cardSize }}");
+        function changeCard() {
+            c = c + 1;
+            document.getElementById("cardSize").innerHTML = c;
+        }
+    </script>
 
 </html>
