@@ -19,18 +19,19 @@
                 let template = `<div class="col mb-2 mb-lg-4">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <img class="card-img-top" src=${product.image} alt="..." />
+                        <img class="card-img-top w-50 m-auto" src=${product.image} alt="..." />
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
                                 <h5 class="fw-bolder">${product.title}</h5>
-                                <!-- Product price-->
-                                price: ${product.price} EGP
+                    
+        
                             </div>
                         </div>
                         <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
+                            <h6>price: ${product.price} EGP</h6>
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                                     data-bs-target="#details${product._id}" data-bs-toggle="modal">More details</a>
                             </div>
@@ -135,7 +136,7 @@
             {{#each selector}}
             <input onclick="filterProducts('{{_id}}')" type="radio" class="btn-check" name="btnradio" id="{{_id}}"
                 autocomplete="off">
-            <label class="btn btn-outline-primary p-1 p-md-2 m-1 m-md-2 rounded-pill shadow-none" for="{{_id}}">{{name}}</label>
+            <label class="btn btn-outline-primary p-1 p-md-2 m-1 m-md-2 rounded-pill shadow-none fs-6" for="{{_id}}">{{name}}</label>
             {{/each}}
         </div>
     </section>
@@ -148,18 +149,19 @@
                 <div class="col mb-2 mb-lg-4">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <img class="card-img-top" src={{image}} alt="..." />
+                        <img class="card-img-top w-50 m-auto" src={{image}} alt="..." />
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
                                 <h5 class="fw-bolder">{{title}}</h5>
                                 <!-- Product price-->
-                                price: {{price}} EGP
+                        
                             </div>
                         </div>
                         <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
+                            <h6 className="mb-2" >price: {{price}} EGP</h6>
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                                     data-bs-target="#details{{_id}}" data-bs-toggle="modal">More details</a>
                             </div>
