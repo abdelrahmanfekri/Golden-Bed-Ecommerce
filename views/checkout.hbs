@@ -123,6 +123,7 @@
                 }
                 function deleteElement(id, prc) {
                     price -= Number(prc)
+                    price = Math.round(price);
                     document.getElementById("totalPrice").innerHTML = (price) + " EGP";
                     document.getElementById(id + "List").remove();
                     if (price == 0) {
