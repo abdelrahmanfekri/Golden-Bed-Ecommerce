@@ -117,18 +117,19 @@
                     {{#each products}}
                     price += Number("{{price}}");
                     {{/each}}
-                            document.getElementById("totalPrice").innerHTML = price + " EGP";
-                            return price;
-                        }
-                        function deleteElement(id, prc) {
-                            price -= Number(prc)
-                            document.getElementById("totalPrice").innerHTML = (price) + " EGP";
-                            document.getElementById(id + "List").remove();
-                            if (price == 0) {
-                                document.getElementById("checkoutButton").disabled = true;
-                            }
-                            return true;
-                        }
+                    price = Math.round(price);
+                    document.getElementById("totalPrice").innerHTML = price + " EGP";
+                    return price;
+                }
+                function deleteElement(id, prc) {
+                    price -= Number(prc)
+                    document.getElementById("totalPrice").innerHTML = (price) + " EGP";
+                    document.getElementById(id + "List").remove();
+                    if (price == 0) {
+                        document.getElementById("checkoutButton").disabled = true;
+                    }
+                    return true;
+                }
             </script>
         </div>
     </div>
